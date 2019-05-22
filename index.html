@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<link rel="icon" href="" sizes="16x16" type=image/png>
+	<title></title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css"/>
+
+</head>
+<body>
+	<section class="both-sections">
+		<section class="left">
+			<form>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="formGroupExampleInput">Angulo de giro del colector</label>
+						<input type="number" class="form-control" id="Giro" placeholder="α2">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="formGroupExampleInput2">Inclinación del colector</label>
+						<input type="number" class="form-control" id="Inclinación" placeholder="β2">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputState">Tipo de terreno</label>
+					<select id="Terreno" class="form-control">
+						<option selected>Seleccione</option>
+						<option value="0.2">Tierra o Vegetación</option>
+						<option value="0.8">Nieve</option>
+						<option value="0.15">Grava</option>
+						<option value="0.3">Concreto</option>
+					</select>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="formGroupExampleInput2">Fecha</label>
+						<input type="date" class="form-control" id="Fecha" placeholder="" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="formGroupExampleInput2">Hora (24hrs)</label>
+						<input type="time" class="form-control" id="Hora" placeholder="" required>
+					</div>
+				</div>
+				
+				<button type="button" class="btn btn-primary btn-lg btn-block btn-info" onclick="Resultado();">Calcular!</button>
+
+			</form>
+		</section>
+		<section class="right">
+			<form>
+				<div class="form-group">
+					<label for="formGroupExampleInput">Lugar</label>
+					<input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+				</div>
+				<div id="map">
+					<p></p>
+				</div>
+			</form>
+		</section>
+	</section>
+
+	<section class="results">
+		<form class="contain">
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<label for="formGroupExampleInput">Beta</label>
+					<input type="number" class="form-control" id="Beta"disabled="true">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="formGroupExampleInput">Azimut</label>
+					<input type="number" class="form-control" id="Azimut"disabled="true">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="formGroupExampleInput">Radiación Directa</label>
+					<input type="number" class="form-control" id="Directa"disabled="true">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="formGroupExampleInput">Radiación Reflejada</label>
+					<input type="number" class="form-control" id="Reflejada" placeholder="" disabled="true">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="formGroupExampleInput">Radiación Difusa</label>
+					<input type="number" class="form-control" id="Difusa" placeholder="" disabled="true">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="formGroupExampleInput">Radiación Total</label>
+					<input type="number" class="form-control" id="Total" placeholder="" disabled="true">
+				</div>
+			</div>
+		</form>
+	</section>
+
+
+</body>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="map.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFjJcSQF4jyIe4PKW9b6SItv-wDoCP2wU&callback=initMap" async defer></script>
+
+    <script src="script.js"></script>
+</html>

@@ -1,0 +1,62 @@
+body{
+    background-image: url(assets/water-ocean-light-bridge-night-dawn-744886-pxhere.com.jpg);
+    background-color: black;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: top center;
+    background-size: cover;
+    color: rgb(255, 255, 255);
+}
+
+
+.both-sections{ 
+    z-index: 1;
+    width: 80%;
+    height: 65vh;
+    background-color: rgba(67, 57, 77, 0.548);
+    border: 1px solid rgb(109, 98, 98);
+    border-radius: 15px;
+    margin-left: 10%;
+    position: relative;
+    margin-top: 4%;
+}
+.both-sections .left{
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0);
+    float: left;
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding: 3%;
+}
+.both-sections .left .btn{
+    margin-top: 7% !important;
+}
+
+.both-sections .right{
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0);
+    float: left;
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding: 3%;
+}
+
+.both-sections .right #map{
+    height:40vh;
+    width: 100%;
+}
+
+.results{
+    z-index: 1;
+    width: 80%;
+    height: 19vh;
+    padding: 2%;
+    background-color: rgba(67, 57, 77, 0.548);
+    border: 1px solid rgb(109, 98, 98);
+    border-radius: 15px;
+    position: relative;
+    margin-left: 10%;
+    margin-top: 5vh;
+}
