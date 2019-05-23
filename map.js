@@ -1,7 +1,8 @@
 var map;
 var Lat;
 var Long;
-var Alt=1235;
+var Ls;
+var Alt=0.142;
 var marker;  
 
 function initMap() {
@@ -26,6 +27,26 @@ function initMap() {
       icon: 'assets/solar-panel.png',
       map: map          
     });    
+  }
+}
+function dtor(degrees){
+  rad=degrees*Math.PI/180;
+  return rad;
+}
+function rtod(rad){
+  degrees=rad*180/Math.PI;
+  return degrees;
+}
+function calcLs(){
+  for(i=-11;i<=12;i++){
+    if((i*15)-Long<=15 && (((i+1)*15)-Long<=15)){
+      if((i*15)-Long<=(((i+1)*15)-Long<=15)){
+        Ls=i*15;
+      }
+      else{
+        Ls=(I+1)*15;
+      }
+    }
   }
 }
 
@@ -58,21 +79,27 @@ function Resultado(){
     for (var i in CountDays){                                               //Calculamos N
       if(i<Month-1)
         N=N+CountDays[i];
-    }
-
-    var D = (N-81)*(360/365);                                               //Calculamos D, (Vease Ecuacion del tiempo2.pdf - Pg. 4)
-    var Et = 9.87*Math.sin(2*D)-7.53*Math.cos(D)-1.5*Math.sin(D);           //Calculamos Et, (Vease Ecuacion del tiempo2.pdf - Pg. 4)
-    var TSV= TLE+4*(Lat)+Et;                                                //*Calculamos Tiempo Solar Verdadero, (Vease Ecuacion del tiempo2.pdf - Pg. 6) - Falta Calcular Ls - Le *ahi va lo que hara Jara*
+    }         
+    var D = (N-81)*(360/365);                                              //Calculamos D, (Vease Ecuacion del tiempo2.pdf - Pg. 4)
+    var Et = 9.87*Math.sin(dtor(2*D))-7.53*Math.cos(dtor(D))-1.5*Math.sin(dtor(D));           //Calculamos Et, (Vease Ecuacion del tiempo2.pdf - Pg. 4)
+    calcLs();
+    var TSV= TLE+(4*(Ls-Long))+Et;                                                //*Calculamos Tiempo Solar Verdadero, (Vease Ecuacion del tiempo2.pdf - Pg. 6) - Falta Calcular Ls - Le *ahi va lo que hara Jara*
 
     var h=(TSV-720)/4;                                                      //Calculamos el angulo horario "h", (Vease Datos Astronomicos.pdf - Pg. 5)
-    var d=23.45*Math.sin((360/365)*(284+N));                                //Calculamos la Declinacion "d", (Vease Datos Astronomicos.pdf - Pg. 6)
+    var d=23.45*Math.sin(dtor((360/365)*(284+N)));                                //Calculamos la Declinacion "d", (Vease Datos Astronomicos.pdf - Pg. 6)
 
-    var Beta = Math.asin(Math.cos(Lat)*Math.cos(h)*Math.cos(d)             //Calculamos Beta "B", (Vease Datos Astronomicos.pdf - Pg. 8 - Ecuacion 2)
-                      +Math.sin(Lat)*Math.sin(d));
-    var Alpha = Math.acos((1/Math.cos(Beta))*(Math.cos(Lat)*Math.sin(d)    //Calculamos Azimut "A", (Vease Datos Astronomicos.pdf - Pg. 8 - Ecuacion 3)
-                      -Math.cos(d)*Math.sin(Lat)*Math.cos(h)));
-    var Tetta = Math.sin(Beta)*Math.cos(inclinacion)                        //*Calculamos Tetta "0", (Vease Datos Astronomicos.pdf - Pg. 9) Falta saber q es a2.
-                +Math.cos(Beta)*Math.sin(inclinacion)*Math.cos(Alpha-giro);        
+    var Beta = rtod(Math.asin((Math.cos(dtor(Lat))*Math.cos(dtor(h))*Math.cos(dtor(d)))             //Calculamos Beta "B", (Vease Datos Astronomicos.pdf - Pg. 8 - Ecuacion 2)
+                      +(Math.sin(dtor(Lat))*Math.sin(dtor(d)))));
+                      if(Lat>0){
+    var Alpha = rtod(Math.acos((1/Math.cos(dtor(Beta)))*((Math.cos(dtor(Lat))*Math.sin(dtor(d)))    //Calculamos Azimut "A", (Vease Datos Astronomicos.pdf - Pg. 8 - Ecuacion 3)
+                      +(Math.cos(dtor(d))*Math.sin(dtor(Lat))*Math.cos(dtor(h))))));
+                    }
+                    else{
+                      var Alpha = rtod(Math.acos((1/Math.cos(dtor(Beta)))*((Math.cos(dtor(Lat))*Math.sin(dtor(d)))    //Calculamos Azimut "A", (Vease Datos Astronomicos.pdf - Pg. 8 - Ecuacion 3)
+                      -(Math.cos(dtor(d))*Math.sin(dtor(Lat))*Math.cos(dtor(h))))));
+                    }
+    var Tetta = (Math.sin(dtor(Beta))*Math.cos(dtor(inclinacion)))                        //*Calculamos Tetta "0", (Vease Datos Astronomicos.pdf - Pg. 9) Falta saber q es a2.
+                +(Math.cos(dtor(Beta))*Math.sin(dtor(inclinacion))*Math.cos(dtor(Alpha-giro)));        
 
     
     var Ac, Bc, Cc;                                                       //Definimos variables de la tabla 2.2, (Vease Ecuacion del tiempo2.pdf - Pg. 10)
@@ -147,13 +174,12 @@ function Resultado(){
 
 
     var ppo = Math.pow(Math.E, (-0.1184*Alt));                               //Calculamos p/po, (Vease Ecuacion del tiempo2.pdf - Pg. 9)
-    var Idn = Ac*Math.pow(Math.E, (-ppo*(Bc/Math.sin(Beta))));                 //Calculamos IDN, (Vease Ecuacion del tiempo2.pdf - Pg. 9)
+    var Idn = Ac*Math.pow(Math.E, (-ppo*(Bc/Math.sin(dtor(Beta)))));                 //Calculamos IDN, (Vease Ecuacion del tiempo2.pdf - Pg. 9)
     var Id = Idn*(Tetta);                                            //Calculamos ID, (Vease Ecuacion del tiempo2.pdf - Pg. 9) *Falta calcular Tetta*
-    var Is = Cc*Idn*((1+Math.cos(Alt))/2);                                   //Calculamos Is, (Vease Ecuacion del tiempo2.pdf - Pg. 9)
-    var Ir = Idn*foreground*(Cc+Math.sin(Beta))                              //Calculamos Ir, (Vease Ecuacion del tiempo2.pdf - Pg. 9)
-              *((1+Math.cos(inclinacion))/2);
-    var Itot = Id+Is+Ir;
-
+    var Is = Cc*Idn*((1+Math.cos(dtor(inclinacion)))/2);                                   //Calculamos Is, (Vease Ecuacion del tiempo2.pdf - Pg. 9)
+    var Ir = Idn*foreground*(Cc+Math.sin(dtor(Beta)))                              //Calculamos Ir, (Vease Ecuacion del tiempo2.pdf - Pg. 9)
+              *((1-Math.cos(dtor(inclinacion)))/2);
+    var Itot = Id+Is+Ir;         
     document.getElementById("Beta").value = Beta;                           //Mostramos el resultado de Beta en la interfaz
     document.getElementById("Azimut").value = Alpha;                        //Mostramos el resultado de Azimut en la interfaz
     document.getElementById("Directa").value= Id;                           //Mostramos el resultado de Radiacion Directa en la interfaz
