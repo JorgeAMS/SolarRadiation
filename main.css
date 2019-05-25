@@ -60,3 +60,18 @@ body{
     margin-left: 10%;
     margin-top: 5vh;
 }
+.buttons_go button{
+    width: 48%;
+    margin-left: 1.5%;
+}
+
+#chartContainer{
+    margin-top: 50px;
+    height: 450px;
+    width: 100%;
+}
+.resultadoFinal{
+    float: center;
+    margin: auto;
+    text-align: center;
+}
