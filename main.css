@@ -75,3 +75,6 @@ body{
     margin: auto;
     text-align: center;
 }
+#resultVisible{
+    visibility: hidden;
+}

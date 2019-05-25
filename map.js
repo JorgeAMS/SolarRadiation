@@ -371,4 +371,5 @@ function Graficar() {
     }]
   });
   chart.render();
+  document.getElementById('resultVisible').style.visibility='visible';
 }
